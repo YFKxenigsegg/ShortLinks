@@ -3,10 +3,11 @@ using ShortLinks.DAL.EF;
 using ShortLinks.Models.Entities;
 using ShortLinks.DAL.Interfaces;
 using System;
+using System.Threading.Tasks;
 
 namespace ShortLinks.DAL.Repositories
 {
-    class EFUnitOfWork : IUnitOfWork
+    public class EFUnitOfWork : IUnitOfWork
     {
         private LinkContext db;
         private UserRepository userRepository;
@@ -39,20 +40,20 @@ namespace ShortLinks.DAL.Repositories
         }
         private bool disposed = false;
 
-        public virtual void Dispose(bool disposing)
+        public async Task Dispose(bool disposing)
         {
             if (!this.disposed)
             {
                 if (disposing)
                 {
-                    db.Dispose();
+                    await db.DisposeAsync();
                 }
                 this.disposed = true;
             }
         }
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            Dispose(true);
+            await Dispose(true);
             GC.SuppressFinalize(this);
         }
     }

@@ -8,6 +8,5 @@ namespace ShortLinks.Models.Entities
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordCode { get; set; }
-        public List<Link> Links { get; set; }
     }
 }

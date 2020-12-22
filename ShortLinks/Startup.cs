@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShortLinks.DAL;
 using ShortLinks.DAL.EF;
+using ShortLinks.DAL.Interfaces;
+using ShortLinks.DAL.Repositories;
 
 namespace ShortLinks
 {
@@ -20,8 +22,9 @@ namespace ShortLinks
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<LinkContext>(options =>
-                   options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddOptions();
+            services.AddDbContext<LinkContext>();
+            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             services.AddControllers();
         }
 
@@ -42,11 +45,6 @@ namespace ShortLinks
             {
                 endpoints.MapControllers();
             });
-            using (var scope = app.ApplicationServices.CreateScope())
-            {
-                LinkContext context = scope.ServiceProvider.GetRequiredService<LinkContext>();
-                DBInitializer.Initial(context);
-            }
         }
     }
 }

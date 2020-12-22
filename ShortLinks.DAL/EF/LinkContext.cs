@@ -13,7 +13,7 @@ namespace ShortLinks.DAL.EF
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=172.18.107.177;Port=5432;Database=shortlinks;Username=testUser;Password=testPassword");
+            optionsBuilder.UseNpgsql("Host=192.168.1.104;Port=5432;Database=shortlinks;Username=testUser;Password=testPassword");
         }
         public LinkContext(DbContextOptions<LinkContext> options)
             : base(options)

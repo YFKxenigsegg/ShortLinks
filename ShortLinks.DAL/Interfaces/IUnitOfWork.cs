@@ -3,7 +3,7 @@ using System;
 
 namespace ShortLinks.DAL.Interfaces
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IAsyncDisposable
     {
         IRepository<User> Users { get; }
         IRepository<Link> Links { get; }
