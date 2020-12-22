@@ -1,0 +1,55 @@
+version: "3.5"
+services:
+  dbpg:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: testUser
+      POSTGRES_PASSWORD: testPassword
+    volumes:
+      - postgres_database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      my_net:
+        ipv4_address: 172.29.0.98
+
+  redisdb:
+    image: redis:latest
+    restart: always
+    command: redis-server --requirepass testPassword
+    ports:
+      - 6379:6379
+    networks:
+      my_net:
+        ipv4_address: 172.29.0.101
+
+  logger:
+    image: datalust/seq
+    restart: always
+    ports:
+      - 5341:80
+    environment:
+      ACCEPT_EULA: Y
+    volumes:
+      - logger_database:/data
+    networks:
+      my_net:
+        ipv4_address: 172.29.0.103
+
+networks:
+  my_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.0.0/16
+
+volumes:
+  postgres_database:
+    external: true
+  logger_database:
+    external: true
+
+
+#if ERROR: Pool overlaps with other one on this address space :
+#docker network prune
