@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace ShortLinks.DAL.Repositories
 {
-    public abstract class RepositoryBase<T> : IDisposable, IRepository<T> where T : class
+    public class RepositoryBase<T> : IDisposable, IRepository<T> where T : class
     {
         private readonly DbSet<T> _table;
         private readonly LinkContext _db;
