@@ -12,7 +12,7 @@ namespace ShortLinks.DAL.Interfaces
         Task<int> Update(T entity);
         Task<int> Update(IList<T> entities);
         Task<int> Deleted(T entity);
-        Task<T> GetOne(int? id);
+        Task<T> GetOne(string shrtlnk);
         Task<List<T>> GetSome(Expression<Func<T, bool>> where);
         Task<List<T>> GetAll();
         Task<List<T>> GetAll<TSortField>(Expression<Func<T, TSortField>> orderBy,

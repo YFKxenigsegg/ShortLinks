@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShortLinks.BLL.Interfaces;
+using ShortLinks.BLL.Services;
 using ShortLinks.DAL.EF;
 using ShortLinks.DAL.Interfaces;
 using ShortLinks.DAL.Repositories;
@@ -23,6 +25,7 @@ namespace ShortLinks
             services.AddOptions();
             services.AddDbContext<LinkContext>();
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            services.AddScoped<ILinkService, LinkService>();
             services.AddControllers();
         }
 

@@ -5,8 +5,7 @@ namespace ShortLinks.DAL.Repositories
 {
     public class LinkRepository : RepositoryBase<Link>
     {
-        private readonly LinkContext db;
-        public LinkRepository(LinkContext context) { db = context; }
+        public LinkRepository(LinkContext context) : base(context) { }
     
     }
 }

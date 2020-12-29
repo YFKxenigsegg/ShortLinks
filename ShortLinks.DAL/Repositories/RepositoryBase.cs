@@ -13,7 +13,6 @@ namespace ShortLinks.DAL.Repositories
     {
         private readonly DbSet<T> _table;
         private readonly LinkContext _db;
-        public RepositoryBase() { }
         public RepositoryBase(LinkContext context)
         {
             _db = context;
@@ -54,7 +53,7 @@ namespace ShortLinks.DAL.Repositories
             _db.Entry(entity).State = EntityState.Deleted;
             return await SaveChangesAsync();
         }
-        public async Task<T> GetOne(int? id) => await _table.FindAsync(id);
+        public async Task<T> GetOne(string shrtlnk) => await _table.FindAsync(shrtlnk);
         public virtual async Task<List<T>> GetAll() => await _table.ToListAsync();
 
         public async Task<List<T>> GetAll<TSortField>(Expression<Func<T, TSortField>>

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ShortLinks.BLL\ShortLinks.BLL.csproj" />
     <ProjectReference Include="..\ShortLinks.DAL\ShortLinks.DAL.csproj" />
   </ItemGroup>
 
