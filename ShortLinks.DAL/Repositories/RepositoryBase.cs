@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ShortLinks.DAL.Repositories
 {
-    public abstract class RepositoryBase<T> : IDisposable, IRepository<T> where T : class
+    public abstract class RepositoryBase<T> : IAsyncDisposable, IRepository<T> where T : class
     {
         private readonly DbSet<T> _table;
         private readonly LinkContext _db;
@@ -18,46 +19,52 @@ namespace ShortLinks.DAL.Repositories
             _db = context;
             _table = _db.Set<T>();
         }
-        public void Dispose()
+        public async Task Dispose()
         {
-            _db?.Dispose();
+            await _db.DisposeAsync();
         }
-        public int Add(T entity)
+        public async ValueTask DisposeAsync()
         {
-            _table.Add(entity);
-            return SaveChanges();
+            await Dispose();
+            GC.SuppressFinalize(this);
         }
-        public int Add(IList<T> entities)
+
+        public async Task<int> Add(T entity)
         {
-            _table.AddRange(entities);
-            return SaveChanges();
+            await _table.AddAsync(entity);
+            return await SaveChangesAsync();
         }
-        public int Update(T entity)
+        public async Task<int> Add(IList<T> entities)
+        {
+            await _table.AddRangeAsync(entities);
+            return await SaveChangesAsync();
+        }
+        public async Task<int> Update(T entity)
         {
             _table.Update(entity);
-            return SaveChanges();
+            return await SaveChangesAsync();
         }
-        public int Update(IList<T> entities)
+        public async Task<int> Update(IList<T> entities)
         {
             _table.UpdateRange(entities);
-            return SaveChanges();
+            return await SaveChangesAsync();
         }
-        public int Deleted(T entity)
+        public async Task<int> Deleted(T entity)
         {
             _db.Entry(entity).State = EntityState.Deleted;
-            return SaveChanges();
+            return await SaveChangesAsync();
         }
-        public T GetOne(int? id) => _table.Find(id);
-        public virtual List<T> GetAll() => _table.ToList();
+        public async Task<T> GetOne(int? id) => await _table.FindAsync(id);
+        public virtual async Task<List<T>> GetAll() => await _table.ToListAsync();
 
-        public List<T> GetAll<TSortField>(Expression<Func<T, TSortField>>
-            orderBy, bool ascending) => (ascending ? _table.OrderBy(orderBy) :
-            _table.OrderByDescending(orderBy)).ToList();
-        public List<T> GetSome(Expression<Func<T, bool>> where)
-        => _table.Where(where).ToList();
-        internal int SaveChanges()
+        public async Task<List<T>> GetAll<TSortField>(Expression<Func<T, TSortField>>
+            orderBy, bool ascending) => await (ascending ? _table.OrderBy(orderBy) :
+            _table.OrderByDescending(orderBy)).ToListAsync();
+        public async Task<List<T>> GetSome(Expression<Func<T, bool>> where)
+        => await _table.Where(where).ToListAsync();
+        internal Task<int> SaveChangesAsync()
         {
-            return _db.SaveChanges();
+            return _db.SaveChangesAsync();
         }
     }
 }
