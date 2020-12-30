@@ -1,5 +1,6 @@
 ﻿using ShortLinks.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace ShortLinks.DAL.EF
 {
@@ -7,18 +8,15 @@ namespace ShortLinks.DAL.EF
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Link> Links { get; set; }
-        public LinkContext()
+        private readonly string _connectionString;
+        public LinkContext(DbContextOptions<LinkContext> options, IConfiguration configuration) : base(options)
         {
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
             Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=192.168.0.104;Port=5432;Database=shortlinks;Username=testUser;Password=testPassword");
-        }
-        public LinkContext(DbContextOptions<LinkContext> options)
-            : base(options)
-        {
-            Database.EnsureCreated();
+            optionsBuilder.UseNpgsql(_connectionString);
         }
     }
 }

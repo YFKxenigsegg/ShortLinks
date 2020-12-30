@@ -1,5 +1,6 @@
 ﻿using ShortLinks.Models.Entities;
 using System;
+using System.Threading.Tasks;
 
 namespace ShortLinks.DAL.Interfaces
 {
@@ -7,6 +8,6 @@ namespace ShortLinks.DAL.Interfaces
     {
         IRepository<User> Users { get; }
         IRepository<Link> Links { get; }
-        void Save();
+        Task Save();
     }
 }

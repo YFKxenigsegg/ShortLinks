@@ -4,39 +4,40 @@ using ShortLinks.Models.Entities;
 using ShortLinks.DAL.Interfaces;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace ShortLinks.DAL.Repositories
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        private LinkContext db;
-        private UserRepository userRepository;
-        private LinkRepository linkRepository;
-        public EFUnitOfWork(DbContextOptions<LinkContext> options)
+        private LinkContext _db;
+        private UserRepository _userRepository;
+        private LinkRepository _linkRepository;
+        public EFUnitOfWork(DbContextOptions<LinkContext> options, IConfiguration configuration)
         {
-            db = new LinkContext(options);
+            _db = new LinkContext(options, configuration);
         }
         public IRepository<User> Users
         {
             get
             {
-                if (userRepository == null)
-                    userRepository = new UserRepository(db);
-                return userRepository;
+                if (_userRepository == null)
+                    _userRepository = new UserRepository(_db);
+                return _userRepository;
             }
         }
         public IRepository<Link> Links
         {
             get
             {
-                if (linkRepository == null)
-                    linkRepository = new LinkRepository(db);
-                return linkRepository;
+                if (_linkRepository == null)
+                    _linkRepository = new LinkRepository(_db);
+                return _linkRepository;
             }
         }
-        public void Save()
+        public async Task Save()
         {
-            db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
         private bool disposed = false;
 
@@ -46,7 +47,7 @@ namespace ShortLinks.DAL.Repositories
             {
                 if (disposing)
                 {
-                    await db.DisposeAsync();
+                    await _db.DisposeAsync();
                 }
                 this.disposed = true;
             }

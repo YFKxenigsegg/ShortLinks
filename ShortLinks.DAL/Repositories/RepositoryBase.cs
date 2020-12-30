@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShortLinks.DAL.Repositories
 {
-    public abstract class RepositoryBase<T> : IAsyncDisposable, IRepository<T> where T : class
+    public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
         private readonly DbSet<T> _table;
         private readonly LinkContext _db;
@@ -18,40 +18,25 @@ namespace ShortLinks.DAL.Repositories
             _db = context;
             _table = _db.Set<T>();
         }
-        public async Task Dispose()
-        {
-            await _db.DisposeAsync();
-        }
-        public async ValueTask DisposeAsync()
-        {
-            await Dispose();
-            GC.SuppressFinalize(this);
-        }
-
-        public async Task<int> Add(T entity)
+        public async Task Add(T entity)
         {
             await _table.AddAsync(entity);
-            return await SaveChangesAsync();
         }
-        public async Task<int> Add(IList<T> entities)
+        public async Task Add(IList<T> entities)
         {
             await _table.AddRangeAsync(entities);
-            return await SaveChangesAsync();
         }
-        public async Task<int> Update(T entity)
+        public async Task Update(T entity)
         {
             _table.Update(entity);
-            return await SaveChangesAsync();
         }
-        public async Task<int> Update(IList<T> entities)
+        public async Task Update(IList<T> entities)
         {
             _table.UpdateRange(entities);
-            return await SaveChangesAsync();
         }
-        public async Task<int> Deleted(T entity)
+        public async Task Deleted(T entity)
         {
             _db.Entry(entity).State = EntityState.Deleted;
-            return await SaveChangesAsync();
         }
         public async Task<T> GetOne(string shrtlnk) => await _table.FindAsync(shrtlnk);
         public virtual async Task<List<T>> GetAll() => await _table.ToListAsync();
@@ -61,9 +46,9 @@ namespace ShortLinks.DAL.Repositories
             _table.OrderByDescending(orderBy)).ToListAsync();
         public async Task<List<T>> GetSome(Expression<Func<T, bool>> where)
         => await _table.Where(where).ToListAsync();
-        internal Task<int> SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            return _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
     }
 }
