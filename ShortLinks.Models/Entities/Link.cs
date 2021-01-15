@@ -11,5 +11,6 @@ namespace ShortLinks.Models.Entities
         public DateTime Created { get; set; }
         public string OriginalLink { get; set; }
         public User User { get; set; }
+        public int UserId { get; set; }
     }
 }

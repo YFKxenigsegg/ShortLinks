@@ -3,6 +3,8 @@ using ShortLinks.Models.Entities;
 using System.Collections.Generic;
 using ShortLinks.BLL.Interfaces;
 using System.Threading.Tasks;
+using ShortLinks.Models.DTO;
+using AutoMapper;
 
 namespace ShortLinks.Controllers
 {
@@ -10,21 +12,52 @@ namespace ShortLinks.Controllers
     [ApiController]
     public class LinkController : ControllerBase
     {
-        ILinkService linkService;
-        public LinkController(ILinkService serv) { linkService = serv; }
-        [HttpGet]
-        public async Task<IEnumerable<Link>> Get()
+        private readonly ILinkService _linkService;
+        private readonly IMapper _mapper;
+        public LinkController(ILinkService serv, IMapper mapper)
         {
-            return await linkService.GetAll();
+            _linkService = serv;
+            _mapper = mapper;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var links = _mapper.Map<IEnumerable<OutputLinkDTO>>(await _linkService.GetAll());
+            return Ok(links);
         }
 
-        [HttpGet("{shrtlnk}")]
-        public async Task<ActionResult<Link>> Get(string shrtlnk)
+        [HttpGet]
+        public async Task<IActionResult> Get(InputLinkDTO lnk)
         {
-            var link = await linkService.GetOne(shrtlnk);
-            if (link == null)
-                return NotFound();
+            var link = _mapper.Map<Link>(lnk);
+            var resultlink = await _linkService.GetOne(link);
+            var outputLinkDto = _mapper.Map<OutputLinkDTO>(resultlink);
+            return Ok(outputLinkDto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(InputLinkDTO lnk)
+        {
+            var link = _mapper.Map<Link>(lnk);
+            var resultlink = await _linkService.Create(link);
+            var outputLinkDto = _mapper.Map<OutputLinkDTO>(resultlink);
+            return Ok(outputLinkDto);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(InputLinkDTO lnk)
+        {
+            var link = _mapper.Map<Link>(lnk);
+            await _linkService.Update(link);
             return Ok(link);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(InputLinkDTO lnk)
+        {
+            var link = _mapper.Map<Link>(lnk);
+            await _linkService.Delete(link);
+            return Ok();
         }
     }
 }

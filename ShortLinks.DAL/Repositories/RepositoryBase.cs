@@ -18,29 +18,21 @@ namespace ShortLinks.DAL.Repositories
             _db = context;
             _table = _db.Set<T>();
         }
-        public async Task Add(T entity)
+        public virtual async Task<IQueryable<T>> GetAll() => (IQueryable<T>)await _table.ToListAsync();
+        public async Task<T> Get(T entity) => await _table.FindAsync(entity);
+        public async Task<T> Add(T entity)
         {
-            await _table.AddAsync(entity);
+            var  newitem = await _table.AddAsync(entity);
+            return newitem.Entity;                         
         }
-        public async Task Add(IList<T> entities)
-        {
-            await _table.AddRangeAsync(entities);
-        }
-        public async Task Update(T entity)
+        public void Update(T entity)
         {
             _table.Update(entity);
         }
-        public async Task Update(IList<T> entities)
+        public void Delete(T entity)
         {
-            _table.UpdateRange(entities);
+            _db.Remove(entity); 
         }
-        public async Task Deleted(T entity)
-        {
-            _db.Entry(entity).State = EntityState.Deleted;
-        }
-        public async Task<T> GetOne(string shrtlnk) => await _table.FindAsync(shrtlnk);
-        public virtual async Task<List<T>> GetAll() => await _table.ToListAsync();
-
         public async Task<List<T>> GetAll<TSortField>(Expression<Func<T, TSortField>>
             orderBy, bool ascending) => await (ascending ? _table.OrderBy(orderBy) :
             _table.OrderByDescending(orderBy)).ToListAsync();

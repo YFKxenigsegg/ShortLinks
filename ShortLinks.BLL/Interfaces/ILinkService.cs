@@ -6,8 +6,10 @@ namespace ShortLinks.BLL.Interfaces
 {
     public interface ILinkService
     {
-        //other methods
         public Task<IEnumerable<Link>> GetAll();
-        public Task<Link> GetOne(string shrtlnk);
+        public Task<Link> GetOne(Link link);
+        public Task<Link> Create(Link link);
+        public Task Update(Link link);
+        public Task Delete(Link link);
     }
 }

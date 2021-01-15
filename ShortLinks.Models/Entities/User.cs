@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShortLinks.Models.Entities
 {
@@ -8,5 +9,7 @@ namespace ShortLinks.Models.Entities
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordCode { get; set; }
+        [NotMapped]
+        public string Token { get; set; }
     }
 }

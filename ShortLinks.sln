@@ -4,12 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLinks", "ShortLinks\ShortLinks.csproj", "{85641F64-DA49-40DE-9557-4D5707133B8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49F72756-D1F7-45F1-BE6D-B3D8F2BFF31E} = {49F72756-D1F7-45F1-BE6D-B3D8F2BFF31E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLinks.DAL", "ShortLinks.DAL\ShortLinks.DAL.csproj", "{1DE62600-6D8F-47DE-9383-6F96C59CAAD3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLinks.Models", "ShortLinks.Models\ShortLinks.Models.csproj", "{696C143F-60DF-4ECF-BD40-90EEF961F0AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLinks.BLL", "ShortLinks.BLL\ShortLinks.BLL.csproj", "{11A2AA6D-3683-4B73-9476-FE4C7D8C0581}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShortLinks.BLL", "ShortLinks.BLL\ShortLinks.BLL.csproj", "{11A2AA6D-3683-4B73-9476-FE4C7D8C0581}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortLinks.Auth.Common", "ShortLinks.Auth.Common\ShortLinks.Auth.Common.csproj", "{49F72756-D1F7-45F1-BE6D-B3D8F2BFF31E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +38,10 @@ Global
 		{11A2AA6D-3683-4B73-9476-FE4C7D8C0581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11A2AA6D-3683-4B73-9476-FE4C7D8C0581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11A2AA6D-3683-4B73-9476-FE4C7D8C0581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49F72756-D1F7-45F1-BE6D-B3D8F2BFF31E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49F72756-D1F7-45F1-BE6D-B3D8F2BFF31E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49F72756-D1F7-45F1-BE6D-B3D8F2BFF31E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49F72756-D1F7-45F1-BE6D-B3D8F2BFF31E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
