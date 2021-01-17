@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ShortLinks.BLL.Interfaces;
-using ShortLinks.DAL.EF;
-using ShortLinks.Auth.Common;
 using ShortLinks.Models.DTO;
 using ShortLinks.Models.Entities;
-using Microsoft.Extensions.Options;
-using AutoMapper.Configuration;
 
 namespace ShortLinks.Controllers
 {
@@ -41,16 +29,11 @@ namespace ShortLinks.Controllers
         }
         
         [HttpPost, Route("login")]
-        public async Task<IActionResult> Authorization(AuthUserDTO usr)//<-- минимум логики!!
+        public async Task<IActionResult> Authorization(AuthUserDTO usr)
         {
             var user = _mapper.Map<User>(usr);
             var resultUser = await _accountService.Authorization(user);
-            if (resultUser != null)
-            {
-                //var token = GenerateJWT(resultUser);
-                //return Ok(new { access_token = token });
-            }
-            return Unauthorized();
+            return Unauthorized(resultUser);
         }
 
         [HttpGet]

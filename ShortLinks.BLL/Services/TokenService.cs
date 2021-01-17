@@ -1,33 +1,27 @@
 ﻿using ShortLinks.Models.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
-using Microsoft.Extensions.DependencyInjection;
 using ShortLinks.Auth.Common;
-using System.Configuration;
 
 namespace ShortLinks.BLL.Services
 {
-    public class TokenSercive
+    public class TokenService
     {
-        public TokenSercive(IConfiguration configuration)
+        private readonly AuthOptions _appSettings;
+        public TokenService(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _appSettings = configuration.GetSection("AuthOptions") as AuthOptions;
         }
 
-        public IConfiguration Configuration { get; }
         public string GenerateJWT(User user)
         {
             ClaimsIdentity identity = GetIdentity(user);
-            var _appSettings = Configuration.GetSection("AuthOptions") as AuthOptions;
 
             var token = new JwtSecurityToken(
                 issuer: _appSettings.ISSUER,

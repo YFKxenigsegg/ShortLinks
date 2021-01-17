@@ -12,9 +12,9 @@ namespace ShortLinks.BLL.Services
     {
         private readonly IUnitOfWork _database;
         private readonly AuthOptions _appSettings;
-        private readonly TokenSercive _tokenService;
+        private readonly TokenService _tokenService;
 
-        public AccountService(IUnitOfWork uow, IConfiguration configuration, TokenSercive tokenSercive)
+        public AccountService(IUnitOfWork uow, IConfiguration configuration, TokenService tokenSercive)
         {
             _database = uow;
             _appSettings = configuration.GetSection("AuthOptions") as AuthOptions;
