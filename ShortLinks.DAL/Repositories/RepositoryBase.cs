@@ -18,7 +18,7 @@ namespace ShortLinks.DAL.Repositories
             _db = context;
             _table = _db.Set<T>();
         }
-        public virtual async Task<IQueryable<T>> GetAll() => (IQueryable<T>)await _table.ToListAsync();
+        public virtual IQueryable<T> GetAll() => _table.AsQueryable();
         public async Task<T> Get(T entity) => await _table.FindAsync(entity);
         public async Task<T> Add(T entity)
         {

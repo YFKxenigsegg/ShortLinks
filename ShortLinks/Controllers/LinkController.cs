@@ -1,28 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShortLinks.Models.Entities;
-using System.Collections.Generic;
 using ShortLinks.BLL.Interfaces;
 using System.Threading.Tasks;
 using ShortLinks.Models.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using ShortLinks.Services;
+using System.Linq;
 
 namespace ShortLinks.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LinkController : ControllerBase
     {
         private readonly ILinkService _linkService;
         private readonly IMapper _mapper;
-        public LinkController(ILinkService serv, IMapper mapper)
+        private readonly IUserManagerService _userManagerService;
+        public LinkController(ILinkService serv, IMapper mapper, IUserManagerService userManagerServ)
         {
             _linkService = serv;
             _mapper = mapper;
+            _userManagerService = userManagerServ;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
-            var links = _mapper.Map<IEnumerable<OutputLinkDTO>>(await _linkService.GetAll());
+            var links = _mapper.Map<IQueryable<OutputLinkDTO>>(_linkService.GetAll(_userManagerService.GetUserId()));
             return Ok(links);
         }
 
@@ -39,7 +44,7 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> Post(InputLinkDTO lnk)
         {
             var link = _mapper.Map<Link>(lnk);
-            var resultlink = await _linkService.Create(link);
+            var resultlink = await _linkService.Create(link, _userManagerService.GetUserId());
             var outputLinkDto = _mapper.Map<OutputLinkDTO>(resultlink);
             return Ok(outputLinkDto);
         }

@@ -12,9 +12,9 @@ namespace ShortLinks.BLL.Services
     {
         private readonly IUnitOfWork _database;
         private readonly AuthOptions _appSettings;
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
-        public AccountService(IUnitOfWork uow, IConfiguration configuration, TokenService tokenSercive)
+        public AccountService(IUnitOfWork uow, IConfiguration configuration, ITokenService tokenSercive)
         {
             _database = uow;
             _appSettings = configuration.GetSection("AuthOptions") as AuthOptions;
@@ -31,8 +31,7 @@ namespace ShortLinks.BLL.Services
         }
         public async Task<User> Authorization(User usr)
         {
-            //var users = await GetAllIQueryable();
-            var users = await _database.Users.GetAll();
+            var users = _database.Users.GetAll();       //!! посмотреть на metanit
             User user = await users.FirstOrDefaultAsync(r => r.Email == usr.Email);
             //if (user == null)
                 //throw new IncorrectDataException("User doesn't exist!");
@@ -41,11 +40,11 @@ namespace ShortLinks.BLL.Services
             string hashCode = user.PasswordHash;
             string encodingPasswordString = _tokenService.EncodePassword(usr.PasswordCode, hashCode);
 
-            user = await users.FirstOrDefaultAsync(f => encodingPasswordString.Equals(user.PasswordCode));
+            if(encodingPasswordString.Equals(user.PasswordCode))
             //    if (user == null)
             //        throw new IncorrectDataException("Incorrect password!");
 
-            _tokenService.GenerateJWT(user);
+            user.Token = _tokenService.GenerateJWT(user);
             await _database.Save();
             return user;
         }

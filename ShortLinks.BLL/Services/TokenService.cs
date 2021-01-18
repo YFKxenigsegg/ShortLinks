@@ -8,10 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using ShortLinks.Auth.Common;
+using ShortLinks.BLL.Interfaces;
 
 namespace ShortLinks.BLL.Services
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private readonly AuthOptions _appSettings;
         public TokenService(IConfiguration configuration)

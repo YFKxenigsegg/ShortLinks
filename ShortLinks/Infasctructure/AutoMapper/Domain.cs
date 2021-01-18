@@ -17,7 +17,6 @@ namespace ShortLinks.Infasctructure.AutoMapper
         public UserProfile()
         {
             CreateMap<AuthUserDTO, User>().ForMember(dest => dest.PasswordCode, opt => opt.MapFrom(src => src.Password));
-            CreateMap<User, OutputUserDTO>();
         }
     }
 }

@@ -29,5 +29,9 @@
     <ProjectReference Include="..\ShortLinks.BLL\ShortLinks.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infasctructure\Middleware\" />
+  </ItemGroup>
+
 
 </Project>

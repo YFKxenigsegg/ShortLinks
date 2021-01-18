@@ -8,7 +8,7 @@ namespace ShortLinks.DAL.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        Task<IQueryable<T>> GetAll();
+        IQueryable<T> GetAll();
         Task<T> Get(T entity);
         Task<T> Add(T entity);
         void Update(T entity);

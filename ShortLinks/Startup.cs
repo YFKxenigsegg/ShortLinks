@@ -13,6 +13,7 @@ using ShortLinks.DAL.Interfaces;
 using ShortLinks.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using ShortLinks.Services;
 
 namespace ShortLinks
 {
@@ -36,6 +37,9 @@ namespace ShortLinks
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             services.AddScoped<ILinkService, LinkService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserManagerService, UserManagerService>();
+            services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
