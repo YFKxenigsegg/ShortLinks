@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using ShortLinks.Services;
 using System.Linq;
+using ShortLinks.Contracts;
 
 namespace ShortLinks.Controllers
 {
@@ -18,11 +19,13 @@ namespace ShortLinks.Controllers
         private readonly ILinkService _linkService;
         private readonly IMapper _mapper;
         private readonly IUserManagerService _userManagerService;
-        public LinkController(ILinkService serv, IMapper mapper, IUserManagerService userManagerServ)
+        private readonly ILoggerManager _logger;
+        public LinkController(ILinkService serv, IMapper mapper, IUserManagerService userManagerServ, ILoggerManager logger)
         {
             _linkService = serv;
             _mapper = mapper;
             _userManagerService = userManagerServ;
+            _logger = logger;
         }
         [HttpGet]
         public IActionResult GetAll()

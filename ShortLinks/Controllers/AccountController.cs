@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShortLinks.BLL.Interfaces;
+using ShortLinks.Contracts;
 using ShortLinks.Models.DTO;
 using ShortLinks.Models.Entities;
 
@@ -15,10 +16,12 @@ namespace ShortLinks.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
-        public AccountController(IAccountService serv, IMapper mapper)
+        private readonly ILoggerManager _logger;
+        public AccountController(IAccountService serv, IMapper mapper, ILoggerManager logger)
         {
             _accountService = serv;
             _mapper = mapper;
+            _logger = logger;
         }
         [AllowAnonymous]
         [HttpPost, Route("registration")]

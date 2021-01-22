@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ShortLinks.Auth.Common\ShortLinks.Auth.Common.csproj" />
     <ProjectReference Include="..\ShortLinks.BLL\ShortLinks.BLL.csproj" />
+    <ProjectReference Include="..\ShortLinks.LoggerService\ShortLinks.LoggerService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,6 +14,11 @@ using ShortLinks.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using ShortLinks.Services;
+using ShortLinks.Contracts;
+using ShortLinks.LoggerService;
+using NLog;
+using System;
+using System.IO;
 
 namespace ShortLinks
 {
@@ -21,6 +26,7 @@ namespace ShortLinks
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -39,6 +45,7 @@ namespace ShortLinks
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserManagerService, UserManagerService>();
+            services.ConfigureLoggerService(); //аналог через метод расширения класса ServiceExtensions services.AddScoped< ILoggerManager, LoggerManager >();
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
