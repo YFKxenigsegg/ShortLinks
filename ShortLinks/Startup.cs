@@ -14,7 +14,6 @@ using ShortLinks.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using ShortLinks.Services;
-using ShortLinks.Contracts;
 using ShortLinks.LoggerService;
 using NLog;
 using System;
@@ -37,7 +36,7 @@ namespace ShortLinks
         {
             var authOptionsConfiguration = Configuration.GetSection("AuthOptions");
             services.Configure<AuthOptions>(authOptionsConfiguration);
-            var _appSettings = Configuration.GetSection("AuthOptions") as AuthOptions;
+            var _appSettings = Configuration.GetSection("AuthOptions") as AuthOptions; //System.NullReferenceException: 'Object reference not set to an instance of an object.'     _appSettings was null.
             services.AddAutoMapper(typeof(Startup));
             services.AddOptions();
             services.AddDbContext<LinkContext>();
