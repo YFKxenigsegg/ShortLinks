@@ -30,9 +30,5 @@
     <ProjectReference Include="..\ShortLinks.LoggerService\ShortLinks.LoggerService.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infasctructure\Middleware\" />
-  </ItemGroup>
-
 
 </Project>

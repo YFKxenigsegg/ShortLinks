@@ -5,6 +5,7 @@ using ShortLinks.Models.Entities;
 using ShortLinks.Auth.Common;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ShortLinks.Models.Exceptions;
 
 namespace ShortLinks.BLL.Services
 {
@@ -33,8 +34,8 @@ namespace ShortLinks.BLL.Services
         {
             var users = _database.Users.GetAll();       //!! посмотреть на metanit
             User user = await users.FirstOrDefaultAsync(r => r.Email == usr.Email);
-            //if (user == null)
-                //throw new IncorrectDataException("User doesn't exist!");
+            if (user == null)
+                throw new IncorrectDataException("User doesn't exist!");
 
             // шифрование пароля по хеш-коду (salt method)
             string hashCode = user.PasswordHash;

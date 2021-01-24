@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShortLinks.Models.Exceptions
 {
-    class IncorrectDataException
+    public class IncorrectDataException : Exception
     {
+        public IncorrectDataException(string mes)
+        {
+
+        }
+
     }
 }

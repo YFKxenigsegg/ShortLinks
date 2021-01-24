@@ -19,6 +19,7 @@ using ShortLinks.LoggerService;
 using NLog;
 using System;
 using System.IO;
+using ShortLinks.Infasctructure.Middleware;
 
 namespace ShortLinks
 {
@@ -91,6 +92,7 @@ namespace ShortLinks
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.ConfigureCustomExceptionMiddleware();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
