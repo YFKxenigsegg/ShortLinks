@@ -27,12 +27,12 @@ namespace ShortLinks.Controllers
         [HttpPost, Route("registration")]
         public async Task<IActionResult> Registration(AuthUserDTO usr)
         {
-            _logger.LogInfo("Registration user");
-            _logger.LogDebug("Registration. Mapping AuthUserDTO to User");
+            _logger.LogInfo("");
+            _logger.LogDebug("Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
-            _logger.LogDebug("Registration. Getting result from AccountService.Registration()");
+            _logger.LogDebug("Getting result from AccountService.Registration()");
             var resultUser = await _accountService.Registrarion(user);
-            _logger.LogDebug("Registration. Return Ok(resultUser)");
+            _logger.LogDebug("Return Ok(resultUser)");
             return Ok(resultUser);
         }
 
@@ -40,24 +40,24 @@ namespace ShortLinks.Controllers
         [HttpPost, Route("login")]
         public async Task<IActionResult> Authorization(AuthUserDTO usr)
         {
-            _logger.LogInfo("Authorization user");
-            _logger.LogDebug("Authorization. Mapping AuthUserDTO to User");
+            _logger.LogInfo("");
+            _logger.LogDebug("Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
-            _logger.LogDebug("Authorization. Getting result from AccountService.Authorization()");
+            _logger.LogDebug("Getting result from AccountService.Authorization()");
             var resultUser = await _accountService.Authorization(user);
-            _logger.LogDebug("Authorization. Return Ok(resultUser.Token)");
+            _logger.LogDebug("Return Ok(resultUser.Token)");
             return Ok(resultUser.Token);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetInfoUser(AuthUserDTO usr)
         {
-            _logger.LogInfo("GetInfoUser action");
-            _logger.LogDebug("GetInfoUser. Mapping AuthUserDTO to User");
+            _logger.LogInfo("");
+            _logger.LogDebug("Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
-            _logger.LogDebug("GetInfoUser. Getting result from AccountService.GetUserInfo()");
+            _logger.LogDebug("Getting result from AccountService.GetUserInfo()");
             var resultUser = await _accountService.GetUserInfo(user);
-            _logger.LogDebug("GetInfoUser. Return Ok(resultUser.Email)");
+            _logger.LogDebug("Return Ok(resultUser.Email)");
             return Ok(resultUser.Email);
         }
     }
