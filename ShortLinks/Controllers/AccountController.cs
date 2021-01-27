@@ -52,7 +52,7 @@ namespace ShortLinks.Controllers
         [HttpGet]
         public async Task<IActionResult> GetInfoUser(AuthUserDTO usr)
         {
-            _logger.LogInfo("GetInfoUser");
+            _logger.LogInfo("GetInfoUser action");
             _logger.LogDebug("GetInfoUser. Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
             _logger.LogDebug("GetInfoUser. Getting result from AccountService.GetUserInfo()");
