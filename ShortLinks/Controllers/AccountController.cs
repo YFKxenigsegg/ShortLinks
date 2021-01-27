@@ -25,27 +25,39 @@ namespace ShortLinks.Controllers
         }
         [AllowAnonymous]
         [HttpPost, Route("registration")]
-        public async Task<IActionResult> Registrarion(AuthUserDTO usr)
+        public async Task<IActionResult> Registration(AuthUserDTO usr)
         {
+            _logger.LogInfo("Registration user");
+            _logger.LogDebug("Registration. Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
-            var resultuser = await _accountService.Registrarion(user);
-            return Ok(resultuser);
+            _logger.LogDebug("Registration. Getting result from AccountService.Registration()");
+            var resultUser = await _accountService.Registrarion(user);
+            _logger.LogDebug("Registration. Return Ok(resultUser)");
+            return Ok(resultUser);
         }
 
         [AllowAnonymous]
         [HttpPost, Route("login")]
         public async Task<IActionResult> Authorization(AuthUserDTO usr)
         {
+            _logger.LogInfo("Authorization user");
+            _logger.LogDebug("Authorization. Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
+            _logger.LogDebug("Authorization. Getting result from AccountService.Authorization()");
             var resultUser = await _accountService.Authorization(user);
+            _logger.LogDebug("Authorization. Return Ok(resultUser.Token)");
             return Ok(resultUser.Token);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetInfoUser(AuthUserDTO usr)
         {
+            _logger.LogInfo("GetInfoUser");
+            _logger.LogDebug("GetInfoUser. Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
+            _logger.LogDebug("GetInfoUser. Getting result from AccountService.GetUserInfo()");
             var resultUser = await _accountService.GetUserInfo(user);
+            _logger.LogDebug("GetInfoUser. Return Ok(resultUser.Email)");
             return Ok(resultUser.Email);
         }
     }
