@@ -3,21 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using ShortLinks.Auth.Common;
 using ShortLinks.BLL.Interfaces;
+using Microsoft.Extensions.Options;
 
 namespace ShortLinks.BLL.Services
 {
     public class TokenService : ITokenService
     {
         private readonly AuthOptions _appSettings;
-        public TokenService(IConfiguration configuration)
+        public TokenService(IOptions<AuthOptions> configuration)
         {
-            _appSettings = configuration.GetSection("AuthOptions") as AuthOptions;
+            _appSettings = configuration.Value;
         }
 
         public string GenerateJWT(User user)

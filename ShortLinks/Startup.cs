@@ -36,7 +36,8 @@ namespace ShortLinks
         {
             var authOptionsConfiguration = Configuration.GetSection("AuthOptions");
             services.Configure<AuthOptions>(authOptionsConfiguration);
-            var _appSettings = Configuration.GetSection("AuthOptions") as AuthOptions; //System.NullReferenceException: 'Object reference not set to an instance of an object.'     _appSettings was null.
+            var appSettings = new AuthOptions();
+            Configuration.GetSection("AuthOptions").Bind(appSettings);
             services.AddAutoMapper(typeof(Startup));
             services.AddOptions();
             services.AddDbContext<LinkContext>();
@@ -45,7 +46,7 @@ namespace ShortLinks
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserManagerService, UserManagerService>();
-            services.ConfigureLoggerService(); //аналог через метод расширения класса ServiceExtensions services.AddScoped< ILoggerManager, LoggerManager >();
+            services.ConfigureLoggerService();
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -54,11 +55,11 @@ namespace ShortLinks
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             ValidateIssuer = true,
-                            ValidIssuer = _appSettings.ISSUER,                      
+                            ValidIssuer = appSettings.ISSUER,                      
                             ValidateAudience = true,                         
-                            ValidAudience = _appSettings.AUDIENCE,
+                            ValidAudience = appSettings.AUDIENCE,
                             ValidateLifetime = true,
-                            IssuerSigningKey = _appSettings.GetSymmetricSecurityKey(),
+                            IssuerSigningKey = appSettings.GetSymmetricSecurityKey(),
                             ValidateIssuerSigningKey = true,
                         };
                     });
