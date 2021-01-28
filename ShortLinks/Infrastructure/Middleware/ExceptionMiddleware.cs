@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ShortLinks.Contracts;
+using ShortLinks.Infasctructure.Middleware;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace ShortLinks.Infasctructure.Middleware
+namespace ShortLinks.Infrastructure.Middleware
 {
     public class ExceptionMiddleware
     {

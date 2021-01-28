@@ -18,7 +18,7 @@ using ShortLinks.LoggerService;
 using NLog;
 using System;
 using System.IO;
-using ShortLinks.Infasctructure.Middleware;
+using ShortLinks.Infrastructure.Middleware;
 
 namespace ShortLinks
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace ShortLinks.Infasctructure.Middleware
+namespace ShortLinks.Infrastructure.Middleware
 {
     public static class ExceptionMiddlewareExtensions
     {
