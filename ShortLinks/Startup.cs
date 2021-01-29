@@ -67,13 +67,8 @@ namespace ShortLinks
 
             services.AddSwaggerGen(options =>
             {
-                options.DescribeAllEnumsAsStrings();
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "eShopOnContainers - Catalog HTTP API",
-                    Version = "v1",
-                    Description = "The Catalog Microservice HTTP API. This is a Data-Driven/CRUD microservice sample"
-                });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
             });
         }
 

@@ -27,7 +27,7 @@ namespace ShortLinks.Controllers
             _userManagerService = userManagerServ;
             _logger = logger;
         }
-        [HttpGet]
+        [HttpGet, Route("getall")]
         public IActionResult GetAll()
         {
             _logger.LogInfo("");
@@ -37,7 +37,7 @@ namespace ShortLinks.Controllers
             return Ok(links);
         }
 
-        [HttpGet]
+        [HttpGet,Route("get")]
         public async Task<IActionResult> Get(InputLinkDTO lnk)
         {
             _logger.LogInfo("");
