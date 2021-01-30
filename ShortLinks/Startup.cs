@@ -19,6 +19,7 @@ using NLog;
 using System;
 using System.IO;
 using ShortLinks.Infrastructure.Middleware;
+using Serilog;
 
 namespace ShortLinks
 {
@@ -84,6 +85,7 @@ namespace ShortLinks
                 app.UseDeveloperExceptionPage();
             }
             app.UseHttpsRedirection();
+            app.UseSerilogRequestLogging();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
