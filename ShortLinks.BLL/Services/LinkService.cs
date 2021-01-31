@@ -2,9 +2,7 @@
 using ShortLinks.DAL.Interfaces;
 using ShortLinks.Models.Entities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ShortLinks.Contracts
+﻿namespace ShortLinks.Contracts
 {
     public interface ILoggerManager
     {

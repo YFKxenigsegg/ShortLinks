@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 
-namespace ShortLinks.Infasctructure.Middleware
+
+namespace ShortLinks.Models.Exceptions
 {
     public class ErrorDetails
     {

@@ -1,5 +1,4 @@
-﻿using ShortLinks.DAL.Interfaces;
-using ShortLinks.DAL.EF;
+﻿using ShortLinks.DAL.EF;
 using ShortLinks.Models.Entities;
 
 namespace ShortLinks.DAL.Repositories

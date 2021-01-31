@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ShortLinks.Contracts;
-using ShortLinks.Infasctructure.Middleware;
+using ShortLinks.Models.Exceptions;
 using System;
 using System.Net;
 using System.Threading.Tasks;
