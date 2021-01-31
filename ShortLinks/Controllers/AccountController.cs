@@ -61,12 +61,5 @@ namespace ShortLinks.Controllers
             _logger.LogDebug("Return Ok(resultUser.Email)");
             return Ok(resultUser.Email);
         }
-
-        [HttpGet, Route("test")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Test()
-        {
-            throw new Exception();
-        }
     }
 }

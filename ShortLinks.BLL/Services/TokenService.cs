@@ -29,7 +29,7 @@ namespace ShortLinks.BLL.Services
                 audience: _appSettings.AUDIENCE,
                 claims: identity.Claims,
                 expires: DateTime.Now.AddSeconds(_appSettings.LIFETIME),
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Secret phase")), SecurityAlgorithms.HmacSha256));
+                signingCredentials: new SigningCredentials(_appSettings.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
