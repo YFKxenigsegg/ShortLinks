@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +60,13 @@ namespace ShortLinks.Controllers
             var resultUser = await _accountService.GetUserInfo(user);
             _logger.LogDebug("Return Ok(resultUser.Email)");
             return Ok(resultUser.Email);
+        }
+
+        [HttpGet, Route("test")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Test()
+        {
+            throw new Exception();
         }
     }
 }

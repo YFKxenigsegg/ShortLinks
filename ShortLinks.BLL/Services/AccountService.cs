@@ -27,6 +27,8 @@ namespace ShortLinks.BLL.Services
             string encodedPassword = _tokenService.EncodePassword(user.PasswordCode, hashCode);
             user.PasswordCode = encodedPassword;
             user.PasswordHash = hashCode;
+            //user.Token = _tokenService.GenerateJWT(user);
+            await _database.Users.Add(user);
             await _database.Save();
             return user;
         }
@@ -34,8 +36,8 @@ namespace ShortLinks.BLL.Services
         {
             var users = _database.Users.GetAll();       //!! посмотреть на metanit
             User user = await users.FirstOrDefaultAsync(r => r.Email == usr.Email);
-            if (user == null)
-                throw new IncorrectDataException("User doesn't exist!");
+            //if (user == null)
+                //throw new IncorrectDataException("User doesn't exist!");
 
             // шифрование пароля по хеш-коду (salt method)
             string hashCode = user.PasswordHash;

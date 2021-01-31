@@ -18,6 +18,7 @@ using ShortLinks.LoggerService;
 using NLog;
 using System;
 using System.IO;
+using System.Text;
 using ShortLinks.Infrastructure.Middleware;
 using Serilog;
 
@@ -60,7 +61,7 @@ namespace ShortLinks
                             ValidateAudience = true,                         
                             ValidAudience = appSettings.AUDIENCE,
                             ValidateLifetime = true,
-                            IssuerSigningKey = appSettings.GetSymmetricSecurityKey(),
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Secret phase")),
                             ValidateIssuerSigningKey = true,
                         };
                     });
@@ -86,10 +87,10 @@ namespace ShortLinks
             }
             app.UseHttpsRedirection();
             app.UseSerilogRequestLogging();
+            app.ConfigureCustomExceptionMiddleware();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.ConfigureCustomExceptionMiddleware();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
