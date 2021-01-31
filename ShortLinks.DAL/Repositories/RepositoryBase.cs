@@ -22,8 +22,8 @@ namespace ShortLinks.DAL.Repositories
         public async Task<T> Get(T entity) => await _table.FindAsync(entity);
         public async Task<T> Add(T entity)
         {
-            var  newitem = await _table.AddAsync(entity);
-            return newitem.Entity;                         
+            var newItem = await _table.AddAsync(entity);
+            return newItem.Entity;
         }
         public void Update(T entity)
         {
@@ -31,13 +31,11 @@ namespace ShortLinks.DAL.Repositories
         }
         public void Delete(T entity)
         {
-            _db.Remove(entity); 
+            _db.Remove(entity);
         }
-        public async Task<List<T>> GetAll<TSortField>(Expression<Func<T, TSortField>>
-            orderBy, bool ascending) => await (ascending ? _table.OrderBy(orderBy) :
-            _table.OrderByDescending(orderBy)).ToListAsync();
         public async Task<List<T>> GetSome(Expression<Func<T, bool>> where)
         => await _table.Where(where).ToListAsync();
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate) => _table.Where(predicate);
         public async Task SaveChangesAsync()
         {
             await _db.SaveChangesAsync();

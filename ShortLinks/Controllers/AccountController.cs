@@ -32,7 +32,7 @@ namespace ShortLinks.Controllers
             _logger.LogDebug("Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
             _logger.LogDebug("Getting result from AccountService.Registration()");
-            var resultUser = await _accountService.Registrarion(user);
+            var resultUser = await _accountService.Registration(user);
             _logger.LogDebug("Return Ok(resultUser)");
             return Ok(resultUser);
         }

@@ -2,10 +2,12 @@
 using ShortLinks.DAL.Interfaces;
 using ShortLinks.Models.Entities;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
-using System.Linq;
 
 namespace ShortLinks.BLL.Services
 {
@@ -13,23 +15,23 @@ namespace ShortLinks.BLL.Services
     {
         private readonly IUnitOfWork _database;
         public LinkService(IUnitOfWork uow) { _database = uow; }
-        public IQueryable<Link> GetAll(int idUser)
+        public IEnumerable<Link> GetAll(int idUser)
         {
-            return  _database.Links.GetAll();
+            return _database.Links.GetAll(lks => lks.UserId == idUser);
         }
         public async Task<Link> GetOne(Link lnk)
         {
             var link = await _database.Links.Get(lnk);
             return link;
         }
-        public async Task<Link> Create(Link link, int userid) 
+        public async Task<Link> Create(Link link, int userid)
         {
             link.Created = DateTime.Now;
             link.ShortLink = await CreateShortLink(link);
             link.UserId = userid;
-            var newlink = await _database.Links.Add(link);
+            var newLink = await _database.Links.Add(link);
             await _database.Save();
-            return newlink;
+            return newLink;
         }
         public async Task Update(Link link)
         {

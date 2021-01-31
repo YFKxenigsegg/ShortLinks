@@ -14,8 +14,7 @@ namespace ShortLinks.DAL.Interfaces
         void Update(T entity);
         void Delete(T entity);
         Task<List<T>> GetSome(Expression<Func<T, bool>> where);
-        Task<List<T>> GetAll<TSortField>(Expression<Func<T, TSortField>> orderBy,
-        bool ascending);
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate);
         public Task SaveChangesAsync();
     }
 }

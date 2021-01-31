@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Net;
+using Microsoft.Extensions.Configuration;
 using ShortLinks.BLL.Interfaces;
 using ShortLinks.DAL.Interfaces;
 using ShortLinks.Models.Entities;
@@ -21,7 +22,7 @@ namespace ShortLinks.BLL.Services
             _appSettings = configuration.GetSection("AuthOptions") as AuthOptions;
             _tokenService = tokenSercive;
         }
-        public async Task<User> Registrarion(User user)
+        public async Task<User> Registration(User user)
         {
             string hashCode = _tokenService.GeneratePassword(10);
             string encodedPassword = _tokenService.EncodePassword(user.PasswordCode, hashCode);
@@ -34,18 +35,18 @@ namespace ShortLinks.BLL.Services
         }
         public async Task<User> Authorization(User usr)
         {
-            var users = _database.Users.GetAll();       //!! посмотреть на metanit
+            var users = _database.Users.GetAll();
             User user = await users.FirstOrDefaultAsync(r => r.Email == usr.Email);
-            //if (user == null)
-                //throw new IncorrectDataException("User doesn't exist!");
+            if (user == null)
+                throw new IncorrectDataException(HttpStatusCode.NotFound, "User doesn't exist!");
 
             // шифрование пароля по хеш-коду (salt method)
             string hashCode = user.PasswordHash;
             string encodingPasswordString = _tokenService.EncodePassword(usr.PasswordCode, hashCode);
 
             if(encodingPasswordString.Equals(user.PasswordCode))
-            //    if (user == null)
-            //        throw new IncorrectDataException("Incorrect password!");
+                if (user == null)
+                    throw new IncorrectDataException(HttpStatusCode.Unauthorized, "Incorrect password!");
 
             user.Token = _tokenService.GenerateJWT(user);
             await _database.Save();
