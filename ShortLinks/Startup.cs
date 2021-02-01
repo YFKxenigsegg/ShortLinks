@@ -49,6 +49,7 @@ namespace ShortLinks
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserManagerService, UserManagerService>();
             services.ConfigureLoggerService();
+            services.AddSwagger();
             services.AddHttpContextAccessor();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -66,21 +67,11 @@ namespace ShortLinks
                         };
                     });
             services.AddControllers();
-
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-                options.DocInclusionPredicate((docName, description) => true);
-            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSwagger()
-             .UseSwaggerUI(c =>
-             {
-                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-             });
+            app.UseSwaggerDocumentation();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

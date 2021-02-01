@@ -28,7 +28,7 @@ namespace ShortLinks.BLL.Services
             string encodedPassword = _tokenService.EncodePassword(user.PasswordCode, hashCode);
             user.PasswordCode = encodedPassword;
             user.PasswordHash = hashCode;
-            //user.Token = _tokenService.GenerateJWT(user);
+            user.Token = _tokenService.GenerateJWT(user);
             await _database.Users.Add(user);
             await _database.Save();
             return user;
