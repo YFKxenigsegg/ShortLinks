@@ -12,7 +12,7 @@ namespace ShortLinks.Services
         {
             services.AddSwaggerGen(options =>
             {
-                //options.EnableAnnotations();
+                options.EnableAnnotations();
 
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
