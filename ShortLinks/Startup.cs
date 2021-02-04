@@ -54,7 +54,8 @@ namespace ShortLinks
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
-                        options.RequireHttpsMetadata = false;
+                        options.RequireHttpsMetadata = true;
+                        options.SaveToken = true;
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
                             ValidateIssuer = true,
@@ -62,7 +63,7 @@ namespace ShortLinks
                             ValidateAudience = true,                         
                             ValidAudience = appSettings.AUDIENCE,
                             ValidateLifetime = true,
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Secret phase")),
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.KEY)),
                             ValidateIssuerSigningKey = true,
                         };
                     });

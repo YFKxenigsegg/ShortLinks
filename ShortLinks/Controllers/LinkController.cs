@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using ShortLinks.Models.Entities;
 using ShortLinks.BLL.Interfaces;
 using System.Threading.Tasks;
@@ -6,7 +7,6 @@ using ShortLinks.Models.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using ShortLinks.Services;
-using System.Linq;
 using ShortLinks.Contracts;
 
 namespace ShortLinks.Controllers
@@ -32,7 +32,7 @@ namespace ShortLinks.Controllers
         {
             _logger.LogInfo("");
             _logger.LogDebug("Mapping to OutputLinkDTO from _linkService.GetAll(_userManagerService.GetUserId())");
-            var links = _mapper.Map<IQueryable<OutputLinkDTO>>(_linkService.GetAll(_userManagerService.GetUserId()));
+            var links = _mapper.Map<IEnumerable<OutputLinkDTO>>(_linkService.GetAll(_userManagerService.GetUserId()));
             _logger.LogDebug("Return Ok(links)");
             return Ok(links);
         }
