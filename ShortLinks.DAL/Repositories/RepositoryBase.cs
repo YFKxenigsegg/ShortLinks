@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace ShortLinks.DAL.Repositories
 {
@@ -13,13 +14,15 @@ namespace ShortLinks.DAL.Repositories
     {
         private readonly DbSet<T> _table;
         private readonly LinkContext _db;
-        public RepositoryBase(LinkContext context)
+        protected RepositoryBase(LinkContext context)
         {
             _db = context;
             _table = _db.Set<T>();
         }
         public virtual IQueryable<T> GetAll() => _table.AsQueryable();
-        public async Task<T> Get(T entity) => await _table.FindAsync(entity);
+        public async Task<T> Get(T entity) => await _table.FindAsync(entity); //exception       
+                                                                              //the line below is an alternative with changing the method signature
+         //public async Task<T> Get(T entity) => await _table.FindAsync(JsonConvert.DeserializeObject<T>(entity));
         public async Task<T> Add(T entity)
         {
             var newItem = await _table.AddAsync(entity);

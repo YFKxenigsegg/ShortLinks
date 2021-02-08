@@ -3,6 +3,7 @@ using ShortLinks.DAL.Interfaces;
 using ShortLinks.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
@@ -14,8 +15,8 @@ namespace ShortLinks.BLL.Services
         private readonly IUnitOfWork _database;
         public LinkService(IUnitOfWork uow) { _database = uow; }
         public IEnumerable<Link> GetAll(int idUser)
-        {
-            return _database.Links.GetAll(lks => lks.UserId == idUser);
+        {            
+            return _database.Links.GetAll().Where(x => x.UserId == idUser);
         }
         public async Task<Link> GetOne(Link lnk)
         {

@@ -38,7 +38,7 @@ namespace ShortLinks.Controllers
         }
 
         [HttpGet,Route("get")]
-        public async Task<IActionResult> Get(InputLinkDTO lnk)
+        public async Task<IActionResult> Get([FromQuery]InputLinkDTO lnk)
         {
             _logger.LogInfo("");
             _logger.LogDebug("Mapping InputLinkDTO to Link");

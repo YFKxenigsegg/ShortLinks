@@ -12,7 +12,6 @@ using ShortLinks.Auth.Common;
 using ShortLinks.DAL.Interfaces;
 using ShortLinks.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
 using ShortLinks.Services;
 using ShortLinks.LoggerService;
 using NLog;
