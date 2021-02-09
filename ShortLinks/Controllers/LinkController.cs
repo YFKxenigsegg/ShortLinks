@@ -31,10 +31,12 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> GetAll()
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping to OutputLinkDTO from _linkService.GetAll(_userManagerService.GetUserId())");
-            var links = _mapper.Map<IEnumerable<OutputLinkDTO>>(_linkService.GetAll(_userManagerService.GetUserId()));
+            _logger.LogDebug("Get links from _linkService.GetAll(_userManagerService.GetUserId())");
+            var links = await _linkService.GetAll(_userManagerService.GetUserId());
+            _logger.LogDebug("Mapping to IEnumerable<OutputLinkDTO> from _linkService.GetAll(_userManagerService.GetUserId())");
+            var linksAll = _mapper.Map<IEnumerable<OutputLinkDTO>>(links);
             _logger.LogDebug("Return Ok(links)");
-            return Ok(links);
+            return Ok(linksAll);
         }
 
         [HttpGet,Route("get")]
