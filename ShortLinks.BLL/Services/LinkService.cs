@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShortLinks.BLL.Services
 {
@@ -14,9 +15,9 @@ namespace ShortLinks.BLL.Services
     {
         private readonly IUnitOfWork _database;
         public LinkService(IUnitOfWork uow) { _database = uow; }
-        public IEnumerable<Link> GetAll(int idUser)
+        public async Task<IEnumerable<Link>> GetAll(int idUser)
         {            
-            return _database.Links.GetAll().Where(x => x.UserId == idUser);
+            return await _database.Links.GetAll().Where(x => x.UserId == idUser).ToListAsync();
         }
         public async Task<Link> GetOne(Link lnk)
         {

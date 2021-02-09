@@ -28,7 +28,7 @@ namespace ShortLinks.Controllers
             _logger = logger;
         }
         [HttpGet, Route("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             _logger.LogInfo("");
             _logger.LogDebug("Mapping to OutputLinkDTO from _linkService.GetAll(_userManagerService.GetUserId())");
