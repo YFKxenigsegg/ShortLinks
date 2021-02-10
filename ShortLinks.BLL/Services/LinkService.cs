@@ -44,7 +44,7 @@ namespace ShortLinks.BLL.Services
 
         public async Task Delete(Link lnk)
         {
-            var link = await _database.Links.Get(lnk.OriginalLink);
+            var link = await _database.Links.Get(lnk.ShortLink);     //ничего не возращает
             _database.Links.Delete(link);
             await _database.Save();
         }
@@ -54,7 +54,7 @@ namespace ShortLinks.BLL.Services
             while (true)
             {
                 var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(lnk.OriginalLink));
-                var str = Encoding.Default.GetString(hash).Substring(0, 7);
+                var str = Encoding.UTF8.GetString(hash).Substring(0, 7);
                 var link = await _database.Links.Get(lnk.OriginalLink);
                 if (link == null) return str;
             }
