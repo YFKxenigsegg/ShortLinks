@@ -61,7 +61,7 @@ namespace ShortLinks.Controllers
         {
             _logger.LogInfo("");
             var link = _mapper.Map<Link>(lnk);
-            await _linkService.Update(link);
+            await _linkService.Update(link, _userManagerService.GetUserId());
             return Ok(link);
         }
 

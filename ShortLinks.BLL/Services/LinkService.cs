@@ -33,10 +33,11 @@ namespace ShortLinks.BLL.Services
             await _database.Save();
             return newLink;
         }
-        public async Task Update(Link link)
+        public async Task Update(Link link, int userid)
         {
             link.Created = DateTime.Now;
             link.ShortLink = await CreateShortLink(link);
+            link.UserId = userid;
             _database.Links.Update(link);
             await _database.Save();
         }
