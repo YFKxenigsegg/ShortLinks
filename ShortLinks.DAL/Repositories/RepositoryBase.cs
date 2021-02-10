@@ -20,9 +20,7 @@ namespace ShortLinks.DAL.Repositories
             _table = _db.Set<T>();
         }
         public virtual IQueryable<T> GetAll() => _table.AsQueryable();
-        public async Task<T> Get(T entity) => await _table.FindAsync(entity); //exception       
-                                                                              //the line below is an alternative with changing the method signature
-         //public async Task<T> Get(T entity) => await _table.FindAsync(JsonConvert.DeserializeObject<T>(entity));
+        public async Task<T> Get(string entityIdentifier) => await _table.FindAsync(entityIdentifier);
         public async Task<T> Add(T entity)
         {
             var newItem = await _table.AddAsync(entity);
