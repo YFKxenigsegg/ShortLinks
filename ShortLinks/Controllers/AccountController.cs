@@ -30,11 +30,8 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> Registration(AuthUserDTO usr)
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
-            _logger.LogDebug("Getting result from AccountService.Registration()");
             var resultUser = await _accountService.Registration(user);
-            _logger.LogDebug("Return Ok(resultUser)");
             return Ok(resultUser);
         }
 
@@ -43,11 +40,8 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> Authorization(AuthUserDTO usr)
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
-            _logger.LogDebug("Getting result from AccountService.Authorization()");
             var resultUser = await _accountService.Authorization(user);
-            _logger.LogDebug("Return Ok(resultUser.Token)");
             return Ok(resultUser.Token);
         }
 
@@ -55,11 +49,8 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> GetInfoUser(AuthUserDTO usr)
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping AuthUserDTO to User");
             var user = _mapper.Map<User>(usr);
-            _logger.LogDebug("Getting result from AccountService.GetUserInfo()");
             var resultUser = await _accountService.GetUserInfo(user);
-            _logger.LogDebug("Return Ok(resultUser.Email)");
             return Ok(resultUser.Email);
         }
     }

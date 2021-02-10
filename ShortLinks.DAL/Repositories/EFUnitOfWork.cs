@@ -37,7 +37,8 @@ namespace ShortLinks.DAL.Repositories
         }
         public async Task Save()
         {
-            await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync(); //exception (method Put() LinkController) InnerException:
+                                          //insert or update on table "Links" violates foreign key constraint "FK_Links_Users_UserId"
         }
         private bool disposed = false;
 

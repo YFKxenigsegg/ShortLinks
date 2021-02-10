@@ -31,11 +31,8 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> GetAll()
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Get links from _linkService.GetAll(_userManagerService.GetUserId())");
             var links = await _linkService.GetAll(_userManagerService.GetUserId());
-            _logger.LogDebug("Mapping to IEnumerable<OutputLinkDTO> from _linkService.GetAll(_userManagerService.GetUserId())");
             var linksAll = _mapper.Map<IEnumerable<OutputLinkDTO>>(links);
-            _logger.LogDebug("Return Ok(links)");
             return Ok(linksAll);
         }
 
@@ -43,13 +40,9 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> Get([FromQuery]InputLinkDTO lnk)
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping InputLinkDTO to Link");
             var link = _mapper.Map<Link>(lnk);
-            _logger.LogDebug("Getting result from LinkService.GetOne()");
             var resultLink = await _linkService.GetOne(link);
-            _logger.LogDebug("Mapping Link to OutputLinkDTO");
             var outputLinkDto = _mapper.Map<OutputLinkDTO>(resultLink);
-            _logger.LogDebug("Return Ok(outputLinkDto)");
             return Ok(outputLinkDto);
         }
 
@@ -57,13 +50,9 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> Post(InputLinkDTO lnk)
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping InputLinkDTO to Link");
             var link = _mapper.Map<Link>(lnk);
-            _logger.LogDebug("Getting result from LinkService.GetUserId()");
             var resultLink = await _linkService.Create(link, _userManagerService.GetUserId());
-            _logger.LogDebug("Mapping Link to OutputLinkDTO");
             var outputLinkDto = _mapper.Map<OutputLinkDTO>(resultLink);
-            _logger.LogDebug("Return Ok(outputLinkDto)");
             return Ok(outputLinkDto);
         }
 
@@ -71,11 +60,8 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> Put(InputLinkDTO lnk)
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping InputLinkDTO to Link");
             var link = _mapper.Map<Link>(lnk);
-            _logger.LogDebug("Getting result from LinkService.Update()");
             await _linkService.Update(link);
-            _logger.LogDebug("Return Ok(link)");
             return Ok(link);
         }
 
@@ -83,11 +69,8 @@ namespace ShortLinks.Controllers
         public async Task<IActionResult> Delete(InputLinkDTO lnk)
         {
             _logger.LogInfo("");
-            _logger.LogDebug("Mapping InputLinkDTO to Link");
             var link = _mapper.Map<Link>(lnk);
-            _logger.LogDebug("Getting result from LinkService.Delete()");
             await _linkService.Delete(link);
-            _logger.LogDebug("Return Ok()");
             return Ok();
         }
     }

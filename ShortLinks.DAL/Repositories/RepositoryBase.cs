@@ -32,7 +32,8 @@ namespace ShortLinks.DAL.Repositories
         }
         public void Delete(T entity)
         {
-            _db.Remove(entity);
+            _db.Remove(entity);     //exception (method Delete() LinkController System.ArgumentNullException:
+                                    //'Value cannot be null. Arg_ParamName_Name' (entity=null)
         }
         public async Task<List<T>> GetSome(Expression<Func<T, bool>> where)
         => await _table.Where(where).ToListAsync();
