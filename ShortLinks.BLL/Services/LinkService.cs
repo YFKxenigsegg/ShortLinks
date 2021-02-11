@@ -21,7 +21,8 @@ namespace ShortLinks.BLL.Services
         }
         public async Task<Link> GetOne(Link lnk)
         {
-            var link = await _database.Links.Get(lnk.OriginalLink);
+            lnk.ShortLink = await CreateShortLink(lnk);
+            var link = await _database.Links.Get(lnk.ShortLink);
             return link;
         }
         public async Task<Link> Create(Link link, int userid)
@@ -38,13 +39,17 @@ namespace ShortLinks.BLL.Services
             link.Created = DateTime.Now;
             link.ShortLink = await CreateShortLink(link);
             link.UserId = userid;
+            //
+            //
+            //solve
+            //    For my case, the problem caused when I tried to pass to Update() method an entity that didn't exist in database.
             _database.Links.Update(link);
             await _database.Save();
         }
 
         public async Task Delete(Link lnk)
         {
-            var link = await _database.Links.Get(lnk.ShortLink);     //returns nothing
+            var link = await _database.Links.Get(lnk.ShortLink);
             _database.Links.Delete(link);
             await _database.Save();
         }
@@ -55,7 +60,7 @@ namespace ShortLinks.BLL.Services
             {
                 var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(lnk.OriginalLink));
                 var str = Convert.ToBase64String(hash).Substring(0, 7);
-                var link = await _database.Links.Get(lnk.OriginalLink);
+                var link = await _database.Links.Get(lnk.ShortLink);
                 if (link == null) return str;
             }
         }
