@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ShortLinks.Models.Entities;
 using System.Threading.Tasks;
+using ShortLinks.Models.DTO;
 
 namespace ShortLinks.BLL.Interfaces
 {
@@ -9,7 +10,7 @@ namespace ShortLinks.BLL.Interfaces
         public Task<IEnumerable<Link>> GetAll(int idUser);
         public Task<Link> GetOne(Link link);
         public Task<Link> Create(Link link, int idUser);
-        public Task Update(Link link, int idUser);
+        public Task<Link> Update(InputLinkPutDTO linkPut, int idUser);
         public Task Delete(Link link);
     }
 }
