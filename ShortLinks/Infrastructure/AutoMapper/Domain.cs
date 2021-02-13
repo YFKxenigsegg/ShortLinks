@@ -27,11 +27,6 @@ namespace ShortLinks.Infasctructure.AutoMapper
                     opt => opt.MapFrom(src => src.ShortLink))
                 .ForMember(dest => dest.ExpirationDate,
                     opt => opt.MapFrom(src => src.ExpirationDate));
-            //CreateMap<InputLinkPutDTO, Link>()
-            //    .ForMember(dest => dest.ExpirationDate,
-            //        opt => opt.MapFrom(src => src.ExpirationDate))
-            //    .ForMember(dest => dest.OriginalLink,
-            //        opt => opt.MapFrom(src => src.MutableOriginalLink));
         }
     }
     public class UserProfile : Profile

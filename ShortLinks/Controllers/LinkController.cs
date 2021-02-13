@@ -36,8 +36,8 @@ namespace ShortLinks.Controllers
             return Ok(linksAll);
         }
 
-        [HttpGet, Route("get")]
-        public async Task<IActionResult> Get([FromQuery] InputLinkDTO lnk)
+        [HttpGet,Route("get")]
+        public async Task<IActionResult> Get([FromQuery]InputLinkDTO lnk)
         {
             _logger.LogInfo("");
             var link = _mapper.Map<Link>(lnk);
@@ -57,12 +57,12 @@ namespace ShortLinks.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(InputLinkPutDTO lnk)
+        public async Task<IActionResult> Put(InputLinkDTO lnk)
         {
             _logger.LogInfo("");
-            //var link = _mapper.Map<Link>(lnk);
-            var somelnk = await _linkService.Update(lnk, _userManagerService.GetUserId());
-            return Ok(somelnk);
+            var link = _mapper.Map<Link>(lnk);
+            await _linkService.Update(link, _userManagerService.GetUserId());
+            return Ok(link);
         }
 
         [HttpDelete]
