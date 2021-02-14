@@ -46,7 +46,7 @@ namespace ShortLinks.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetInfoUser(AuthUserDTO usr)
+        public async Task<IActionResult> GetInfoUser([FromQuery]AuthUserDTO usr)
         {
             _logger.LogInfo("");
             var user = _mapper.Map<User>(usr);

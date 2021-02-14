@@ -16,18 +16,18 @@ namespace ShortLinks.BLL.Services
         private readonly IUnitOfWork _database;
         public LinkService(IUnitOfWork uow) { _database = uow; }
         public async Task<IEnumerable<Link>> GetAll(int idUser)
-        {            
+        {
             return await _database.Links.GetAll().Where(x => x.UserId == idUser).ToListAsync();
         }
         public async Task<Link> GetOne(Link lnk)
         {
-            lnk.ShortLink = await CreateShortLink(lnk);
-            var link = await _database.Links.Get(lnk.ShortLink);
+            var link = await _database.Links.Get(lnk.ShortLinkId);
             return link;
         }
         public async Task<Link> Create(Link link, int userid)
         {
             link.Created = DateTime.Now;
+            link.ShortLinkId = -1;
             link.ShortLink = await CreateShortLink(link);
             link.UserId = userid;
             var newLink = await _database.Links.Add(link);
@@ -37,19 +37,17 @@ namespace ShortLinks.BLL.Services
         public async Task Update(Link link, int userid)
         {
             link.Created = DateTime.Now;
+            _database.Links.Delete(await _database.Links.Get(link.ShortLinkId));
+            link.ShortLinkId = -1;
             link.ShortLink = await CreateShortLink(link);
             link.UserId = userid;
-            //
-            //
-            //solve
-            //    For my case, the problem caused when I tried to pass to Update() method an entity that didn't exist in database.
             _database.Links.Update(link);
             await _database.Save();
         }
 
         public async Task Delete(Link lnk)
         {
-            var link = await _database.Links.Get(lnk.ShortLink);
+            var link = await _database.Links.Get(lnk.ShortLinkId);
             _database.Links.Delete(link);
             await _database.Save();
         }
@@ -60,7 +58,7 @@ namespace ShortLinks.BLL.Services
             {
                 var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(lnk.OriginalLink));
                 var str = Convert.ToBase64String(hash).Substring(0, 7);
-                var link = await _database.Links.Get(lnk.ShortLink);
+                var link = await _database.Links.Get(lnk.ShortLinkId);
                 if (link == null) return str;
             }
         }

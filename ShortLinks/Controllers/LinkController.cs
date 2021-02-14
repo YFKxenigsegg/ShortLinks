@@ -66,7 +66,7 @@ namespace ShortLinks.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(OutputLinkDTO lnk)
+        public async Task<IActionResult> Delete(InputLinkDTO lnk)
         {
             _logger.LogInfo("");
             var link = _mapper.Map<Link>(lnk);

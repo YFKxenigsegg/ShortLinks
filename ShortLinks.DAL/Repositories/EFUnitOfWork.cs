@@ -37,9 +37,7 @@ namespace ShortLinks.DAL.Repositories
         }
         public async Task Save()
         {
-            await _db.SaveChangesAsync();//exception Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException:
-                                         //'Database operation expected to affect 1 row(s) but actually affected 0 row(s). Data may have been modified or deleted since entities were loaded 
-                                         //put method
+            await _db.SaveChangesAsync();
         }
         private bool disposed = false;
 

@@ -6,6 +6,7 @@ namespace ShortLinks.Models.Entities
     public class Link
     {
         [Key]
+        public int ShortLinkId { get; set; }
         public string ShortLink { get; set; }
         public DateTime ExpirationDate { get; set; }
         public DateTime Created { get; set; }

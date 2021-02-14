@@ -7,6 +7,7 @@ using ShortLinks.Auth.Common;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShortLinks.Models.Exceptions;
+using Microsoft.Extensions.Options;
 
 namespace ShortLinks.BLL.Services
 {
@@ -16,11 +17,11 @@ namespace ShortLinks.BLL.Services
         private readonly AuthOptions _appSettings;
         private readonly ITokenService _tokenService;
 
-        public AccountService(IUnitOfWork uow, IConfiguration configuration, ITokenService tokenSercive)
+        public AccountService(IUnitOfWork uow, IOptions<AuthOptions> configuration, ITokenService tokenService)
         {
             _database = uow;
-            _appSettings = configuration.GetSection("AuthOptions") as AuthOptions;
-            _tokenService = tokenSercive;
+            _appSettings = configuration.Value;
+            _tokenService = tokenService;
         }
         public async Task<User> Registration(User user)
         {
@@ -55,7 +56,7 @@ namespace ShortLinks.BLL.Services
 
         public async Task<User> GetUserInfo(User user)
         {
-            return await _database.Users.Get(user.UserId.ToString());
+            return await _database.Users.Get(user.UserId);
         }
     }
 }
