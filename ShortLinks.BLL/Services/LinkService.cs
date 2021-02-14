@@ -27,7 +27,6 @@ namespace ShortLinks.BLL.Services
         public async Task<Link> Create(Link link, int userid)
         {
             link.Created = DateTime.Now;
-            link.ShortLinkId = -1;
             link.ShortLink = await CreateShortLink(link);
             link.UserId = userid;
             var newLink = await _database.Links.Add(link);
