@@ -16,12 +16,12 @@ namespace ShortLinks.Services
 
         public int GetUserId()
         {
-            return int.Parse(GetUserDataFromClaims(_httpContextAccessor.HttpContext.User, "UserId"));
+            return int.Parse(GetUserDataFromClaims(_httpContextAccessor.HttpContext?.User, "UserId"));
         }
 
         private string GetUserDataFromClaims(ClaimsPrincipal user, string typeClaimName)
         {
-            IEnumerable<Claim> claims = ((ClaimsIdentity)user.Identity).Claims;
+            IEnumerable<Claim> claims = ((ClaimsIdentity)user.Identity)?.Claims;
 
             string userData = claims.Where(r => r.Type == typeClaimName).Select(f => f.Value).FirstOrDefault();
 

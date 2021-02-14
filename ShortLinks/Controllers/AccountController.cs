@@ -2,8 +2,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using ShortLinks.Auth.Common;
 using ShortLinks.BLL.Interfaces;
 using ShortLinks.Contracts;
 using ShortLinks.Models.DTO;

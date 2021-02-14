@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Microsoft.Extensions.Configuration;
 using ShortLinks.BLL.Interfaces;
 using ShortLinks.DAL.Interfaces;
 using ShortLinks.Models.Entities;

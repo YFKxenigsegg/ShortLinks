@@ -10,7 +10,7 @@ namespace ShortLinks.DAL.Repositories
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        private LinkContext _db;
+        private readonly LinkContext _db;
         private UserRepository _userRepository;
         private LinkRepository _linkRepository;
         public EFUnitOfWork(DbContextOptions<LinkContext> options, IConfiguration configuration)
@@ -19,21 +19,11 @@ namespace ShortLinks.DAL.Repositories
         }
         public IRepository<User> Users
         {
-            get
-            {
-                if (_userRepository == null)
-                    _userRepository = new UserRepository(_db);
-                return _userRepository;
-            }
+            get { return _userRepository ??= new UserRepository(_db); }
         }
         public IRepository<Link> Links
         {
-            get
-            {
-                if (_linkRepository == null)
-                    _linkRepository = new LinkRepository(_db);
-                return _linkRepository;
-            }
+            get { return _linkRepository ??= new LinkRepository(_db); }
         }
         public async Task Save()
         {
