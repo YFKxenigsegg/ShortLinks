@@ -42,14 +42,5 @@ namespace ShortLinks.Controllers
             var resultUser = await _accountService.Authorization(user);
             return Ok(resultUser.Token);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetInfoUser([FromQuery]AuthUserDTO usr)
-        {
-            _logger.LogInfo("");
-            var user = _mapper.Map<User>(usr);
-            var resultUser = await _accountService.GetUserInfo(user);
-            return Ok(resultUser.Email);
-        }
     }
 }

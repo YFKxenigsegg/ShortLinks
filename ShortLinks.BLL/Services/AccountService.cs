@@ -52,10 +52,5 @@ namespace ShortLinks.BLL.Services
             await _database.Save();
             return user;
         }
-
-        public async Task<User> GetUserInfo(User user)
-        {
-             return await _database.Users.Get(user.UserId);
-        }
     }
 }

@@ -7,6 +7,5 @@ namespace ShortLinks.BLL.Interfaces
     {
         public Task<User> Registration(User user);
         public Task<User> Authorization(User user);
-        public Task<User> GetUserInfo(User user);
     }
 }
