@@ -2,9 +2,9 @@
 
 namespace ShortLinks.Models.DTO
 {
-    public class InputLinkDTO
+    public class InputLinkCreateDTO
     {
         public DateTime ExpirationDate { get; set; }
-        public string ShortLink { get; set; }
+        public string OriginalLink { get; set; }
     }
 }

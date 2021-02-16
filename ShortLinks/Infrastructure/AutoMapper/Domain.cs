@@ -8,12 +8,10 @@ namespace ShortLinks.Infasctructure.AutoMapper
     {
         public LinkProfile()
         {
-            CreateMap<InputLinkDTO, Link>()
-                .ForMember(dest => dest.ShortLinkId,
-                    opt => opt.MapFrom(src => src.Id));
-            CreateMap<Link, OutputLinkDTO>()
-                .ForMember(dest => dest.Id,
-                    opt => opt.MapFrom(src => src.ShortLinkId));
+            CreateMap<InputLinkDTO, Link>();
+            CreateMap<InputLinkCreateDTO, Link>();
+            CreateMap<Link, OutputLinkDTO>();
+            CreateMap<OutputLinkDTO, Link>();
         }
     }
     public class UserProfile : Profile

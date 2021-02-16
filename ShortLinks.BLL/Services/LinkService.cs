@@ -21,7 +21,8 @@ namespace ShortLinks.BLL.Services
         }
         public async Task<Link> GetOne(Link lnk)
         {
-            var link = await _database.Links.Get(lnk.ShortLinkId);
+            var links = _database.Links.GetAll();
+            var link = await links.FirstOrDefaultAsync(r => r.ShortLink == lnk.ShortLink);
             return link;
         }
         public async Task<Link> Create(Link link, int userid)
@@ -33,20 +34,19 @@ namespace ShortLinks.BLL.Services
             await _database.Save();
             return newLink;
         }
-        public async Task Update(Link link, int userid)
+        public async Task<Link> Update(Link lnk)
         {
+            var link = await GetOne(lnk);
+            link.OriginalLink = lnk.OriginalLink;
             link.Created = DateTime.Now;
-            _database.Links.Delete(await _database.Links.Get(link.ShortLinkId));
-            link.ShortLinkId = -1;
-            link.ShortLink = await CreateShortLink(link);
-            link.UserId = userid;
             _database.Links.Update(link);
             await _database.Save();
+            return link;
         }
 
         public async Task Delete(Link lnk)
         {
-            var link = await _database.Links.Get(lnk.ShortLinkId);
+            var link = await GetOne(lnk);
             _database.Links.Delete(link);
             await _database.Save();
         }
@@ -57,7 +57,7 @@ namespace ShortLinks.BLL.Services
             {
                 var hash = md5.ComputeHash(Encoding.ASCII.GetBytes(lnk.OriginalLink));
                 var str = Convert.ToBase64String(hash).Substring(0, 7);
-                var link = await _database.Links.Get(lnk.ShortLinkId);
+                var link = await GetOne(lnk);
                 if (link == null) return str;
             }
         }

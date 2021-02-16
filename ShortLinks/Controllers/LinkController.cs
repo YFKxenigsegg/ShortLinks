@@ -47,7 +47,7 @@ namespace ShortLinks.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(InputLinkDTO lnk)
+        public async Task<IActionResult> Post(InputLinkCreateDTO lnk)
         {
             _logger.LogInfo("");
             var link = _mapper.Map<Link>(lnk);
@@ -57,12 +57,13 @@ namespace ShortLinks.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(InputLinkDTO lnk)
+        public async Task<IActionResult> Put(OutputLinkDTO lnk)
         {
             _logger.LogInfo("");
             var link = _mapper.Map<Link>(lnk);
-            await _linkService.Update(link, _userManagerService.GetUserId());
-            return Ok(link);
+            await _linkService.Update(link);
+            var outputLinkDto = _mapper.Map<OutputLinkDTO>(link);
+            return Ok(outputLinkDto);
         }
 
         [HttpDelete]
