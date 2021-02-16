@@ -1,10 +1,7 @@
 ﻿using ShortLinks.DAL.Interfaces;
 using ShortLinks.DAL.EF;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ShortLinks.DAL.Repositories
@@ -32,13 +29,6 @@ namespace ShortLinks.DAL.Repositories
         public void Delete(T entity)
         {
             _db.Remove(entity);
-        }
-        public async Task<List<T>> GetSome(Expression<Func<T, bool>> where)
-        => await _table.Where(where).ToListAsync();
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate) => _table.Where(predicate);
-        public async Task SaveChangesAsync()
-        {
-            await _db.SaveChangesAsync();
         }
     }
 }
